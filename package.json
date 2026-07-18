@@ -1,0 +1,33 @@
+{
+  "name": "seen-zone-simulator",
+  "private": false,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "一个把已读不回焦虑具象化的互动网页玩具。A useless but painfully accurate simulator for being left on read.",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview --host 0.0.0.0"
+  },
+  "keywords": [
+    "vibecoding",
+    "react",
+    "simulator",
+    "github-pages",
+    "social-anxiety",
+    "left-on-read"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.3",
+    "typescript": "^7.0.2",
+    "vite": "^8.1.5"
+  }
+}
