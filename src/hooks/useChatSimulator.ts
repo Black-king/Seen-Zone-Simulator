@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { calmLines, defaultUserMessages, systemHints } from "../data/copy";
+import { momentLikeLines, presenceLines, randomScenes, sceneHints, voiceLines, RandomScene } from "../data/randomEvents";
 import { RelationshipKey, relationshipModes } from "../data/relationshipModes";
 import { downloadReportPoster, PosterResult } from "../lib/poster";
 import { clamp, formatTime, pick, wait } from "../lib/random";
+import { playUISound, UISound } from "../lib/sound";
 
 export type MessageKind = "text" | "typing" | "seen" | "recall" | "hint" | "fake" | "calm";
 export type MessageSide = "me" | "them" | "system";
@@ -41,6 +43,11 @@ export function useChatSimulator() {
   const [elapsed, setElapsed] = useState(0);
   const [sendCount, setSendCount] = useState(0);
   const [reportOpen, setReportOpen] = useState(false);
+  const [soundEnabled, setSoundEnabled] = useState(() => {
+    if (typeof window === "undefined") return true;
+    const stored = window.localStorage.getItem("seen-zone-sound");
+    return stored ? stored === "on" : true;
+  });
   const runRef = useRef(0);
 
   const deepNight = useMemo(() => isDeepNight(), []);
@@ -49,6 +56,12 @@ export function useChatSimulator() {
     0,
     100
   );
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem("seen-zone-sound", soundEnabled ? "on" : "off");
+    }
+  }, [soundEnabled]);
 
   useEffect(() => {
     setPersonName((current) => {
@@ -63,8 +76,17 @@ export function useChatSimulator() {
     return () => window.clearInterval(tick);
   }, [started]);
 
+  const playSound = (sound: UISound) => {
+    if (!soundEnabled) return;
+    void playUISound(sound);
+  };
+
   const pushMessage = (message: Omit<ChatMessage, "id" | "at">) => {
     setMessages((list) => [...list, { ...message, id: id(), at: nowLabel() }]);
+  };
+
+  const pushSystem = (text: string, kind: MessageKind = "hint") => {
+    pushMessage({ kind, side: "system", text });
   };
 
   const addTyping = () => {
@@ -84,50 +106,122 @@ export function useChatSimulator() {
     if ("vibrate" in navigator) navigator.vibrate(pattern);
   };
 
+  const runScene = async (runId: number, scene: RandomScene) => {
+    const alive = () => runRef.current === runId;
+    switch (scene) {
+      case "quickTyping": {
+        setStatus("typing");
+        playSound("typing");
+        await wait(420 + Math.random() * 380);
+        if (!alive()) return;
+        pushSystem(pick(sceneHints.quickTyping));
+        setStatus("silence");
+        break;
+      }
+      case "longTyping": {
+        setStatus("typing");
+        playSound("typing");
+        await wait(700 + Math.random() * 500);
+        if (!alive()) return;
+        pushSystem(pick(sceneHints.longTyping));
+        await wait(480);
+        if (!alive()) return;
+        pushSystem("对方正在输入的时间，已经长到像在写论文。", "calm");
+        setStatus("silence");
+        break;
+      }
+      case "onlineOffline": {
+        const online = Math.random() > 0.45;
+        pushSystem(pick(online ? presenceLines.online : presenceLines.offline), "seen");
+        playSound("presence");
+        maybeVibrate(12);
+        setStatus("silence");
+        break;
+      }
+      case "momentLike": {
+        pushSystem(pick(momentLikeLines));
+        playSound("presence");
+        setStatus("silence");
+        break;
+      }
+      case "voiceGhost": {
+        setStatus("typing");
+        playSound("typing");
+        pushSystem(pick(voiceLines));
+        await wait(700 + Math.random() * 400);
+        if (!alive()) return;
+        pushSystem("语音转文字失败，失败原因：情绪太多。", "recall");
+        playSound("seen");
+        setStatus("silence");
+        break;
+      }
+      case "halfRecall": {
+        setStatus("recall");
+        playSound("recall");
+        pushMessage({ kind: "fake", side: "them", text: `${pick(mode.fakeReplies)}……` });
+        await wait(420 + Math.random() * 260);
+        if (!alive()) return;
+        setMessages((list) => list.slice(0, -1));
+        pushSystem(pick(mode.recallLines), "recall");
+        setStatus("silence");
+        break;
+      }
+      case "delayedExcuse": {
+        pushSystem(pick(sceneHints.delayedExcuse));
+        playSound("alert");
+        await wait(320);
+        if (!alive()) return;
+        pushSystem("消息已进入“稍后再说”队列。", "calm");
+        setStatus("silence");
+        break;
+      }
+    }
+  };
+
+  const runRandomSequence = async (runId: number) => {
+    const alive = () => runRef.current === runId;
+    const totalScenes = Math.random() > 0.66 ? 2 : 1;
+    const scenes = [...randomScenes].sort(() => Math.random() - 0.5).slice(0, totalScenes);
+
+    for (const scene of scenes) {
+      if (!alive()) return;
+      await wait(250 + Math.random() * 650);
+      if (!alive()) return;
+      await runScene(runId, scene);
+    }
+  };
+
   const simulateAfterSend = async (runId: number, projectedSendCount: number) => {
     const alive = () => runRef.current === runId;
 
     setStatus("sending");
+    playSound("send");
     await wait(480);
     if (!alive()) return;
 
     setStatus("typing");
     const typingId = addTyping();
+    playSound("typing");
     maybeVibrate(18);
     await wait(3000);
     if (!alive()) return;
     removeMessage(typingId);
 
     setStatus("seen");
-    pushMessage({ kind: "seen", side: "system", text: `${personName} ${mode.seenLabel}` });
+    pushSystem(`${personName} ${mode.seenLabel}`, "seen");
+    playSound("seen");
     maybeVibrate([20, 40, 20]);
     await wait(850);
     if (!alive()) return;
 
     setStatus("silence");
-    pushMessage({ kind: "hint", side: "system", text: pick([...mode.hints, ...systemHints]) });
+    pushSystem(pick([...mode.hints, ...systemHints]));
 
     const roll = Math.random();
-    if (roll > 0.42) {
-      await wait(1400 + Math.random() * 1800);
+    if (roll > 0.32) {
+      await wait(1000 + Math.random() * 1200);
       if (!alive()) return;
-      setStatus("typing");
-      const secondTypingId = addTyping();
-      await wait(1200 + Math.random() * 1000);
-      if (!alive()) return;
-      removeMessage(secondTypingId);
-
-      if (Math.random() > 0.52) {
-        setStatus("recall");
-        pushMessage({ kind: "fake", side: "them", text: `${pick(mode.fakeReplies)}……` });
-        await wait(520);
-        if (!alive()) return;
-        setMessages((list) => list.slice(0, -1));
-        pushMessage({ kind: "recall", side: "system", text: pick(mode.recallLines) });
-      } else {
-        pushMessage({ kind: "hint", side: "system", text: "对方正在输入过，也停止输入过。你被完整地悬置过。" });
-      }
-      setStatus("silence");
+      await runRandomSequence(runId);
     }
 
     const projectedAnxiety = clamp(
@@ -139,7 +233,8 @@ export function useChatSimulator() {
       await wait(900);
       if (!alive()) return;
       setStatus("calm");
-      pushMessage({ kind: "calm", side: "system", text: pick(calmLines) });
+      playSound("calm");
+      pushSystem(pick(calmLines), "calm");
     }
   };
 
@@ -212,6 +307,8 @@ export function useChatSimulator() {
     shareText,
     copyReport,
     downloadPoster,
+    soundEnabled,
+    setSoundEnabled,
     send,
     reset
   };

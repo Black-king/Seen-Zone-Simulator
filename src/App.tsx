@@ -40,40 +40,35 @@ function App() {
   return (
     <main className="app-shell" style={{ "--accent": simulator.mode.accent } as CSSProperties}>
       <div className="noise" />
-      <div className="orb orb-one" />
-      <div className="orb orb-two" />
 
       <section className="hero-panel">
         <div className="eyebrow">
           <span className="live-dot" />
-          VIBECODING TOY · OPEN SOURCE
+          WECHAT STYLE · OPEN SOURCE TOY
         </div>
         <div className="hero-copy">
           <h1>
             Seen Zone
             <span>Simulator</span>
           </h1>
-          <p>
-            已读不回模拟器：你发送消息，对方正在输入，然后世界归于平静。
-          </p>
+          <p>现在更像一个真正的聊天工具：左边是设置，右边是微信式对话窗口。</p>
         </div>
         <div className="manifesto-card">
           <span>今日治疗项目</span>
           <strong>{openingMessages[new Date().getSeconds() % openingMessages.length]}</strong>
         </div>
         <div className="hero-tags">
-          <span>社死</span>
-          <span>焦虑</span>
-          <span>整蛊朋友</span>
+          <span>微信风格</span>
+          <span>已读不回</span>
+          <span>轻量交互</span>
           <span>可分享海报</span>
-          <span>轻度疗愈</span>
         </div>
       </section>
 
       <section className="simulator-layout">
         <aside className="control-panel">
           <div className="panel-heading">
-            <span>01</span>
+            <span>聊天设置</span>
             <h2>设置你的沉默对象</h2>
           </div>
 
@@ -96,7 +91,14 @@ function App() {
             deepNight={simulator.deepNight}
           />
 
-          <div className="control-actions">
+          <div className="control-actions three-actions">
+            <button
+              className={`ghost-button sound-toggle ${simulator.soundEnabled ? "active" : ""}`}
+              type="button"
+              onClick={() => simulator.setSoundEnabled(!simulator.soundEnabled)}
+            >
+              {simulator.soundEnabled ? "音效 ON" : "音效 OFF"}
+            </button>
             <button className="ghost-button" type="button" onClick={() => simulator.setReportOpen(true)}>
               生成报告
             </button>
@@ -108,25 +110,25 @@ function App() {
 
         <section className="phone-frame" aria-label="聊天模拟器">
           <div className="phone-statusbar">
-            <span>01:36</span>
-            <span>Seen Zone</span>
-            <span>97%</span>
+            <span>微信风格模拟器</span>
+            <span>{simulator.soundEnabled ? "有声" : "静音"}</span>
+            <span>{simulator.anxiety}%</span>
           </div>
 
           <header className="chat-header">
-            <div className="avatar" aria-hidden="true">{simulator.mode.emoji}</div>
-            <div>
-              <strong>{simulator.personName || simulator.mode.defaultName}</strong>
-              <small>
-                {simulator.status === "typing" ? (
-                  <>
-                    正在输入 <TypingIndicator />
-                  </>
-                ) : simulator.status === "seen" ? "已读你的尊严" : "在线，但像离线"}
-              </small>
+            <button className="nav-icon" type="button" aria-label="返回">‹</button>
+            <div className="chat-title">
+              <div className="avatar" aria-hidden="true">{simulator.mode.emoji}</div>
+              <div className="chat-meta">
+                <strong>{simulator.personName || simulator.mode.defaultName}</strong>
+                <small>
+                  微信聊天模拟 · {simulator.status === "typing" ? "对方正在输入" : simulator.status === "seen" ? "已读" : simulator.mode.label}
+                  {simulator.status === "typing" ? <TypingIndicator /> : null}
+                </small>
+              </div>
             </div>
-            <button className="icon-button" type="button" onClick={() => simulator.setReportOpen(true)} aria-label="打开报告">
-              ⌁
+            <button className="nav-icon" type="button" onClick={() => simulator.setReportOpen(true)} aria-label="打开报告">
+              ⋯
             </button>
           </header>
 
@@ -135,7 +137,7 @@ function App() {
               <div className="empty-state">
                 <span>未发送</span>
                 <h3>先发一句试试。</h3>
-                <p>模拟器会认真复现“对方正在输入 3 秒，然后已读不回”的全过程。</p>
+                <p>模拟器会认真复现“对方正在输入、已读、沉默、撤回”的全过程。</p>
               </div>
             ) : (
               simulator.messages.map((message) => <MessageBubble key={message.id} message={message} />)
@@ -144,6 +146,7 @@ function App() {
           </div>
 
           <form className="composer" onSubmit={handleSubmit}>
+            <button className="composer-tool" type="button" aria-label="语音">⌘</button>
             <input
               value={simulator.draft}
               onChange={(event) => simulator.setDraft(event.target.value)}
@@ -175,9 +178,3 @@ function App() {
 }
 
 export default App;
-
-
-
-
-
-
