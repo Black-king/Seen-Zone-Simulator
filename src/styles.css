@@ -309,6 +309,52 @@ button {
   background: linear-gradient(180deg, #fff, #f7f8f5);
 }
 
+.calm-card {
+  display: grid;
+  gap: 8px;
+  padding: 14px 15px;
+  border-radius: 18px;
+  border: 1px solid rgba(7, 193, 96, .16);
+  background: linear-gradient(180deg, rgba(7, 193, 96, .08), rgba(255, 255, 255, .94));
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .58);
+}
+
+.calm-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  color: #147f45;
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.calm-card-top em {
+  font-style: normal;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(7, 193, 96, .12);
+}
+
+.calm-card strong {
+  color: var(--text);
+  line-height: 1.55;
+  font-size: .95rem;
+}
+
+.calm-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+  font-size: .86rem;
+}
+
+.calm-card.idle {
+  border-style: dashed;
+}
+
 .meter-topline,
 .chat-header,
 .report-actions,
@@ -363,6 +409,11 @@ button {
 .mini-stats b {
   color: var(--text);
   font-size: 0.9rem;
+}
+
+.mini-stats .night.active {
+  background: rgba(7, 193, 96, .12);
+  color: #147f45;
 }
 
 .control-actions {
@@ -626,8 +677,8 @@ button {
 }
 
 .system-line.calm span {
-  color: #147f45;
-  background: rgba(7, 193, 96, .12);
+  color: #fff;
+  background: rgba(0, 0, 0, .18);
 }
 
 .composer {

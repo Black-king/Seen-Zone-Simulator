@@ -6,7 +6,7 @@ import { downloadReportPoster, PosterResult } from "../lib/poster";
 import { clamp, formatTime, pick, wait } from "../lib/random";
 import { playUISound, UISound } from "../lib/sound";
 
-export type MessageKind = "text" | "typing" | "seen" | "recall" | "hint" | "fake" | "calm";
+export type MessageKind = "text" | "typing" | "seen" | "recall" | "hint" | "fake";
 export type MessageSide = "me" | "them" | "system";
 
 export type ChatMessage = {
@@ -43,6 +43,7 @@ export function useChatSimulator() {
   const [elapsed, setElapsed] = useState(0);
   const [sendCount, setSendCount] = useState(0);
   const [reportOpen, setReportOpen] = useState(false);
+  const [calmNotice, setCalmNotice] = useState<string | null>(null);
   const [soundEnabled, setSoundEnabled] = useState(() => {
     if (typeof window === "undefined") return true;
     const stored = window.localStorage.getItem("seen-zone-sound");
@@ -126,7 +127,7 @@ export function useChatSimulator() {
         pushSystem(pick(sceneHints.longTyping));
         await wait(480);
         if (!alive()) return;
-        pushSystem("对方正在输入的时间，已经长到像在写论文。", "calm");
+        setCalmNotice("对方正在输入的时间，已经长到像在写论文。");
         setStatus("silence");
         break;
       }
@@ -171,7 +172,7 @@ export function useChatSimulator() {
         playSound("alert");
         await wait(320);
         if (!alive()) return;
-        pushSystem("消息已进入“稍后再说”队列。", "calm");
+        setCalmNotice("消息已进入“稍后再说”队列。");
         setStatus("silence");
         break;
       }
@@ -234,7 +235,7 @@ export function useChatSimulator() {
       if (!alive()) return;
       setStatus("calm");
       playSound("calm");
-      pushSystem(pick(calmLines), "calm");
+      setCalmNotice(pick(calmLines));
     }
   };
 
@@ -258,6 +259,7 @@ export function useChatSimulator() {
     setSendCount(0);
     setDraft(pick(defaultUserMessages));
     setReportOpen(false);
+    setCalmNotice(null);
   };
 
   const result: PosterResult = {
@@ -303,6 +305,7 @@ export function useChatSimulator() {
     deepNight,
     reportOpen,
     setReportOpen,
+    calmNotice,
     result,
     shareText,
     copyReport,

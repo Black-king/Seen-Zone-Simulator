@@ -37,6 +37,15 @@ function App() {
     simulator.send();
   };
 
+  const statusLabel =
+    simulator.status === "typing"
+      ? "对方正在输入"
+      : simulator.status === "seen"
+        ? "对方已读"
+        : simulator.status === "calm"
+          ? "侧边安抚中"
+          : simulator.mode.label;
+
   return (
     <main className="app-shell" style={{ "--accent": simulator.mode.accent } as CSSProperties}>
       <div className="noise" />
@@ -90,6 +99,15 @@ function App() {
             sendCount={simulator.sendCount}
             deepNight={simulator.deepNight}
           />
+
+          <section className={`calm-card ${simulator.calmNotice ? "active" : "idle"}`} aria-label="侧边安抚区">
+            <div className="calm-card-top">
+              <span>侧边安抚区</span>
+              <em>{simulator.calmNotice ? "已触发" : "待触发"}</em>
+            </div>
+            <strong>{simulator.calmNotice || "绿色提示已经搬到这里，不再挤进聊天流。"}</strong>
+            <p>它会单独出现，保留聊天区的干净感，也更像一个真正的沟通工具。</p>
+          </section>
 
           <div className="control-actions three-actions">
             <button
