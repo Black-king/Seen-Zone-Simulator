@@ -1,0 +1,105 @@
+- main [ref=e3]:
+  - generic [ref=e4]:
+    - generic [ref=e7]:
+      - strong [ref=e8]: Seen Zone Simulator
+      - paragraph [ref=e9]: 微信式聊天玩具 · 已读不回模拟器
+    - generic [ref=e10]:
+      - generic [ref=e11]: 今日治疗项目
+      - strong [ref=e12]: 把社交恐惧放进一个聊天框里。
+    - generic [ref=e13]:
+      - generic [ref=e14]: 聊天窗口为主
+      - generic [ref=e15]: 微信风格
+      - generic [ref=e16]: GitHub Pages
+  - generic [ref=e17]:
+    - complementary [ref=e18]:
+      - generic [ref=e19]:
+        - generic [ref=e20]: 聊天设置
+        - heading "设置你的沉默对象" [level=2] [ref=e21]
+      - generic [ref=e22]: 对方名字
+      - textbox "对方名字" [ref=e23]:
+        - /placeholder: 例如：暧昧对象 / 老板 / 甲方
+        - text: 暧昧对象
+      - generic [ref=e24]: 关系模式
+      - radiogroup "选择关系模式" [ref=e25]:
+        - button "💗 暧昧对象 每个标点都像审判。 当前" [pressed] [ref=e26] [cursor=pointer]:
+          - generic [ref=e27]: 💗
+          - generic [ref=e28]:
+            - strong [ref=e29]: 暧昧对象
+            - generic [ref=e30]: 每个标点都像审判。
+          - generic [ref=e31]: 当前
+        - button "🪦 前任 不是聊天，是考古。 切换" [ref=e32] [cursor=pointer]:
+          - generic [ref=e33]: 🪦
+          - generic [ref=e34]:
+            - strong [ref=e35]: 前任
+            - generic [ref=e36]: 不是聊天，是考古。
+          - generic [ref=e37]: 切换
+        - button "📎 老板 已读请假，未读人生。 切换" [ref=e38] [cursor=pointer]:
+          - generic [ref=e39]: 📎
+          - generic [ref=e40]:
+            - strong [ref=e41]: 老板
+            - generic [ref=e42]: 已读请假，未读人生。
+          - generic [ref=e43]: 切换
+        - button "🧾 甲方 正在输入需求变更。 切换" [ref=e44] [cursor=pointer]:
+          - generic [ref=e45]: 🧾
+          - generic [ref=e46]:
+            - strong [ref=e47]: 甲方
+            - generic [ref=e48]: 正在输入需求变更。
+          - generic [ref=e49]: 切换
+        - button "🫧 朋友 也许睡了，也许没想好。 切换" [ref=e50] [cursor=pointer]:
+          - generic [ref=e51]: 🫧
+          - generic [ref=e52]:
+            - strong [ref=e53]: 朋友
+            - generic [ref=e54]: 也许睡了，也许没想好。
+          - generic [ref=e55]: 切换
+      - region "焦虑指数" [ref=e56]:
+        - generic [ref=e57]:
+          - generic [ref=e58]: 焦虑指数
+          - strong [ref=e59]: 72%
+        - paragraph [ref=e62]: 升温：开始频繁打开聊天窗口
+        - generic [ref=e63]:
+          - generic [ref=e64]:
+            - generic [ref=e65]: 00:00
+            - text: 已读时长
+          - generic [ref=e66]:
+            - generic [ref=e67]: "0"
+            - text: 连发消息
+          - generic [ref=e68]:
+            - generic [ref=e69]: "ON"
+            - text: 深夜加成
+      - region "侧边安抚区" [ref=e70]:
+        - generic [ref=e71]:
+          - generic [ref=e72]: 侧边安抚区
+          - emphasis [ref=e73]: 待触发
+        - strong [ref=e74]: 绿色提示已经搬到这里，不再挤进聊天流。
+        - paragraph [ref=e75]: 它会单独出现，保留聊天区的干净感，也更像一个真正的沟通工具。
+      - generic [ref=e76]:
+        - button "音效 ON" [ref=e77] [cursor=pointer]
+        - button "生成报告" [ref=e78] [cursor=pointer]
+        - button "清空体面" [ref=e79] [cursor=pointer]
+    - region "聊天模拟器" [ref=e80]:
+      - generic [ref=e81]:
+        - generic [ref=e82]: 微信风格模拟器
+        - generic [ref=e83]: 有声
+        - generic [ref=e84]: 72%
+      - generic [ref=e85]:
+        - button "返回" [ref=e86] [cursor=pointer]: ‹
+        - generic [ref=e87]:
+          - generic [ref=e88]: 💗
+          - generic [ref=e89]:
+            - strong [ref=e90]: 暧昧对象
+            - generic [ref=e91]: 微信聊天模拟 · 暧昧对象
+        - button "打开报告" [ref=e92] [cursor=pointer]: ⋯
+      - generic [ref=e94]:
+        - generic [ref=e95]: 未发送
+        - heading "先发一句试试。" [level=3] [ref=e96]
+        - paragraph [ref=e97]: 模拟器会认真复现“对方正在输入、已读、沉默、撤回”的全过程。
+      - generic [ref=e98]:
+        - generic "输入辅助工具" [ref=e99]:
+          - button "更多" [ref=e100] [cursor=pointer]: ＋
+          - button "表情" [ref=e101] [cursor=pointer]: ☺
+        - textbox "输入一句会被已读的话……" [ref=e102]: 你是不是生气了？
+        - button "发送" [ref=e103] [cursor=pointer]
+  - generic [ref=e104]:
+    - generic [ref=e105]: Built for people who overthink read receipts.
+    - link "Star-ready on GitHub" [ref=e106] [cursor=pointer]:
+      - /url: https://github.com/

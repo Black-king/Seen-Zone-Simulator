@@ -1,0 +1,102 @@
+- main [ref=e3]:
+  - generic [ref=e4]:
+    - generic [ref=e5]: WECHAT STYLE · OPEN SOURCE TOY
+    - generic [ref=e7]:
+      - heading "Seen Zone Simulator" [level=1] [ref=e8]:
+        - text: Seen Zone
+        - generic [ref=e9]: Simulator
+      - paragraph [ref=e10]: 现在更像一个真正的聊天工具：左边是设置，右边是微信式对话窗口。
+    - generic [ref=e11]:
+      - generic [ref=e12]: 今日治疗项目
+      - strong [ref=e13]: 本模拟器不提供回复，只提供复盘素材。
+    - generic [ref=e14]:
+      - generic [ref=e15]: 微信风格
+      - generic [ref=e16]: 已读不回
+      - generic [ref=e17]: 轻量交互
+      - generic [ref=e18]: 可分享海报
+  - generic [ref=e19]:
+    - complementary [ref=e20]:
+      - generic [ref=e21]:
+        - generic [ref=e22]: 聊天设置
+        - heading "设置你的沉默对象" [level=2] [ref=e23]
+      - generic [ref=e24]: 对方名字
+      - textbox "对方名字" [ref=e25]:
+        - /placeholder: 例如：暧昧对象 / 老板 / 甲方
+        - text: 暧昧对象
+      - generic [ref=e26]: 关系模式
+      - radiogroup "选择关系模式" [ref=e27]:
+        - button "💗 暧昧对象 每个标点都像审判。" [pressed] [ref=e28] [cursor=pointer]:
+          - generic [ref=e29]: 💗
+          - generic [ref=e30]:
+            - strong [ref=e31]: 暧昧对象
+            - generic [ref=e32]: 每个标点都像审判。
+        - button "🪦 前任 不是聊天，是考古。" [ref=e33] [cursor=pointer]:
+          - generic [ref=e34]: 🪦
+          - generic [ref=e35]:
+            - strong [ref=e36]: 前任
+            - generic [ref=e37]: 不是聊天，是考古。
+        - button "📎 老板 已读请假，未读人生。" [ref=e38] [cursor=pointer]:
+          - generic [ref=e39]: 📎
+          - generic [ref=e40]:
+            - strong [ref=e41]: 老板
+            - generic [ref=e42]: 已读请假，未读人生。
+        - button "🧾 甲方 正在输入需求变更。" [ref=e43] [cursor=pointer]:
+          - generic [ref=e44]: 🧾
+          - generic [ref=e45]:
+            - strong [ref=e46]: 甲方
+            - generic [ref=e47]: 正在输入需求变更。
+        - button "🫧 朋友 也许睡了，也许没想好。" [ref=e48] [cursor=pointer]:
+          - generic [ref=e49]: 🫧
+          - generic [ref=e50]:
+            - strong [ref=e51]: 朋友
+            - generic [ref=e52]: 也许睡了，也许没想好。
+      - region "焦虑指数" [ref=e53]:
+        - generic [ref=e54]:
+          - generic [ref=e55]: 焦虑指数
+          - strong [ref=e56]: 72%
+        - paragraph [ref=e59]: 升温：开始频繁打开聊天窗口
+        - generic [ref=e60]:
+          - generic [ref=e61]:
+            - generic [ref=e62]: 00:00
+            - text: 已读时长
+          - generic [ref=e63]:
+            - generic [ref=e64]: "0"
+            - text: 连发消息
+          - generic [ref=e65]:
+            - generic [ref=e66]: "ON"
+            - text: 深夜加成
+      - region "侧边安抚区" [ref=e67]:
+        - generic [ref=e68]:
+          - generic [ref=e69]: 侧边安抚区
+          - emphasis [ref=e70]: 待触发
+        - strong [ref=e71]: 绿色提示已经搬到这里，不再挤进聊天流。
+        - paragraph [ref=e72]: 它会单独出现，保留聊天区的干净感，也更像一个真正的沟通工具。
+      - generic [ref=e73]:
+        - button "音效 ON" [ref=e74] [cursor=pointer]
+        - button "生成报告" [ref=e75] [cursor=pointer]
+        - button "清空体面" [ref=e76] [cursor=pointer]
+    - region "聊天模拟器" [ref=e77]:
+      - generic [ref=e78]:
+        - generic [ref=e79]: 微信风格模拟器
+        - generic [ref=e80]: 有声
+        - generic [ref=e81]: 72%
+      - generic [ref=e82]:
+        - button "返回" [ref=e83] [cursor=pointer]: ‹
+        - generic [ref=e84]:
+          - generic [ref=e85]: 💗
+          - generic [ref=e86]:
+            - strong [ref=e87]: 暧昧对象
+            - generic [ref=e88]: 微信聊天模拟 · 暧昧对象
+        - button "打开报告" [ref=e89] [cursor=pointer]: ⋯
+      - generic [ref=e91]:
+        - generic [ref=e92]: 未发送
+        - heading "先发一句试试。" [level=3] [ref=e93]
+        - paragraph [ref=e94]: 模拟器会认真复现“对方正在输入、已读、沉默、撤回”的全过程。
+      - generic [ref=e95]:
+        - button "语音" [ref=e96] [cursor=pointer]: ⌘
+        - textbox "输入一句会被已读的话……" [ref=e97]: 你是不是生气了？
+        - button "发送" [ref=e98] [cursor=pointer]
+  - generic [ref=e99]:
+    - generic [ref=e100]: Built for people who overthink read receipts.
+    - link "Star-ready on GitHub" [ref=e101] [cursor=pointer]:
+      - /url: https://github.com/

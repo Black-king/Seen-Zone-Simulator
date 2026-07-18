@@ -50,27 +50,22 @@ function App() {
     <main className="app-shell" style={{ "--accent": simulator.mode.accent } as CSSProperties}>
       <div className="noise" />
 
-      <section className="hero-panel">
-        <div className="eyebrow">
-          <span className="live-dot" />
-          WECHAT STYLE · OPEN SOURCE TOY
+      <section className="workspace-banner">
+        <div className="banner-brand">
+          <span className="brand-dot" aria-hidden="true" />
+          <div>
+            <strong>Seen Zone Simulator</strong>
+            <p>微信式聊天玩具 · 已读不回模拟器</p>
+          </div>
         </div>
-        <div className="hero-copy">
-          <h1>
-            Seen Zone
-            <span>Simulator</span>
-          </h1>
-          <p>现在更像一个真正的聊天工具：左边是设置，右边是微信式对话窗口。</p>
-        </div>
-        <div className="manifesto-card">
-          <span>今日治疗项目</span>
+        <div className="banner-copy">
+          <span className="banner-kicker">今日治疗项目</span>
           <strong>{openingMessages[new Date().getSeconds() % openingMessages.length]}</strong>
         </div>
-        <div className="hero-tags">
+        <div className="banner-tags">
+          <span>聊天窗口为主</span>
           <span>微信风格</span>
-          <span>已读不回</span>
-          <span>轻量交互</span>
-          <span>可分享海报</span>
+          <span>GitHub Pages</span>
         </div>
       </section>
 
@@ -164,7 +159,10 @@ function App() {
           </div>
 
           <form className="composer" onSubmit={handleSubmit}>
-            <button className="composer-tool" type="button" aria-label="语音">⌘</button>
+            <div className="composer-tools" aria-label="输入辅助工具">
+              <button className="composer-tool" type="button" aria-label="更多">＋</button>
+              <button className="composer-tool" type="button" aria-label="表情">☺</button>
+            </div>
             <input
               value={simulator.draft}
               onChange={(event) => simulator.setDraft(event.target.value)}
