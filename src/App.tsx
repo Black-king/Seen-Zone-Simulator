@@ -65,6 +65,7 @@ function App() {
           <span>社死</span>
           <span>焦虑</span>
           <span>整蛊朋友</span>
+          <span>可分享海报</span>
           <span>轻度疗愈</span>
         </div>
       </section>
@@ -166,6 +167,7 @@ function App() {
         onClose={() => simulator.setReportOpen(false)}
         result={simulator.result}
         onCopy={simulator.copyReport}
+        onDownloadPoster={simulator.downloadPoster}
       />
       <Toast />
     </main>
@@ -173,5 +175,9 @@ function App() {
 }
 
 export default App;
+
+
+
+
 
 

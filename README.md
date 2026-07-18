@@ -136,13 +136,13 @@ npm run preview
 默认部署分支：
 
 ```txt
-main
+master
 ```
 
 默认仓库名：
 
 ```txt
-seen-zone-simulator
+Seen-Zone-Simulator
 ```
 
 如果你的仓库名不同，请修改 `vite.config.ts`：
@@ -157,7 +157,7 @@ base: "/你的仓库名/"
 Settings → Pages → Build and deployment → Source: GitHub Actions
 ```
 
-推送到 `main` 后即可自动部署。
+推送到 `master` 后即可自动部署。
 
 ---
 

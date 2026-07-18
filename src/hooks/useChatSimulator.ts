@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { calmLines, defaultUserMessages, systemHints } from "../data/copy";
 import { RelationshipKey, relationshipModes } from "../data/relationshipModes";
+import { downloadReportPoster, PosterResult } from "../lib/poster";
 import { clamp, formatTime, pick, wait } from "../lib/random";
 
 export type MessageKind = "text" | "typing" | "seen" | "recall" | "hint" | "fake" | "calm";
@@ -51,8 +52,8 @@ export function useChatSimulator() {
 
   useEffect(() => {
     setPersonName((current) => {
-      const oldDefaults = Object.values(relationshipModes).map((item) => item.defaultName);
-      return oldDefaults.includes(current) ? mode.defaultName : current;
+      const defaults = Object.values(relationshipModes).map((item) => item.defaultName);
+      return defaults.includes(current) ? mode.defaultName : current;
     });
   }, [mode]);
 
@@ -85,6 +86,7 @@ export function useChatSimulator() {
 
   const simulateAfterSend = async (runId: number, projectedSendCount: number) => {
     const alive = () => runRef.current === runId;
+
     setStatus("sending");
     await wait(480);
     if (!alive()) return;
@@ -117,7 +119,7 @@ export function useChatSimulator() {
 
       if (Math.random() > 0.52) {
         setStatus("recall");
-        pushMessage({ kind: "fake", side: "them", text: pick(mode.fakeReplies) + "……" });
+        pushMessage({ kind: "fake", side: "them", text: `${pick(mode.fakeReplies)}……` });
         await wait(520);
         if (!alive()) return;
         setMessages((list) => list.slice(0, -1));
@@ -128,7 +130,11 @@ export function useChatSimulator() {
       setStatus("silence");
     }
 
-    const projectedAnxiety = clamp(mode.baseAnxiety + projectedSendCount * 6 + elapsed * (deepNight ? 1.15 : 0.72), 0, 100);
+    const projectedAnxiety = clamp(
+      mode.baseAnxiety + projectedSendCount * 6 + elapsed * (deepNight ? 1.15 : 0.72),
+      0,
+      100
+    );
     if (projectedAnxiety > 96 || projectedSendCount >= 5) {
       await wait(900);
       if (!alive()) return;
@@ -140,11 +146,12 @@ export function useChatSimulator() {
   const send = () => {
     const text = draft.trim();
     if (!text) return;
+    const nextSendCount = sendCount + 1;
     setStarted(true);
-    setSendCount((count) => count + 1);
+    setSendCount(nextSendCount);
     pushMessage({ kind: "text", side: "me", text });
     setDraft("");
-    void simulateAfterSend(++runRef.current, sendCount + 1);
+    void simulateAfterSend(++runRef.current, nextSendCount);
   };
 
   const reset = () => {
@@ -158,7 +165,7 @@ export function useChatSimulator() {
     setReportOpen(false);
   };
 
-  const result = {
+  const result: PosterResult = {
     personName,
     relation: mode.label,
     elapsedLabel: formatTime(elapsed),
@@ -178,6 +185,10 @@ export function useChatSimulator() {
 
   const copyReport = async () => {
     await navigator.clipboard?.writeText(shareText);
+  };
+
+  const downloadPoster = async () => {
+    await downloadReportPoster(result, mode.accent);
   };
 
   return {
@@ -200,10 +211,8 @@ export function useChatSimulator() {
     result,
     shareText,
     copyReport,
+    downloadPoster,
     send,
     reset
   };
 }
-
-
-
